@@ -35,7 +35,7 @@ def takeExcel():
 
     print(df_filtered)
 
-    #df_filtered.to_csv('sheet_name', header=True, index=False)
+    df_filtered.to_csv('sheet_name', header=True, index=False)
 
 
 
