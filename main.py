@@ -60,14 +60,25 @@ res['Amount 1'] = res['Memo/Description'].str.extract("([\d,.]+)[^\d,.]*$")
 #res['Title match'] = res['Memo/Description'].str.extract("(?i)")
 df_names_titles = pd.DataFrame(takeExcel(1,0))
 
-res["title"]=" "
-            
+res["title"] = " "
+
 s1 = df_names_titles[0]
 s2 = res['Memo/Description']
-    for i in s1.index:
-        for j in s2.index:
-            if str(s1[i]) in (str(s2[j])):
-                res.at[j,"title"]=str(s1[i])
+
+
+s1.replace("", np.NaN, inplace=True)
+s1=s1.dropna()
+
+
+for i in s1.index:
+    if s1[i] == np.NaN:
+        continue
+    #print(str(s1[i]))
+    for j in s2.index:
+        if str(s1[i]) in (str(s2[j])):
+            res.at[j, "title"] = str(s1[i])
+            print(str(s1[i]))
+            print(i)
 print(res)
 
 
