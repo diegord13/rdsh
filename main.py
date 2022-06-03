@@ -60,11 +60,15 @@ res['Amount 1'] = res['Memo/Description'].str.extract("([\d,.]+)[^\d,.]*$")
 #res['Title match'] = res['Memo/Description'].str.extract("(?i)")
 df_names_titles = pd.DataFrame(takeExcel(1,0))
 
-list= []
-for i in df_names_titles.index:
-    for j in res.index:
-        if str(res['Memo/Description'][j]) in (str(df_names_titles[0][i])):
-            list = list.append(str(df_names_titles[0][i]))
+res["title"]=" "
+            
+s1 = df_names_titles[0]
+s2 = res['Memo/Description']
+    for i in s1.index:
+        for j in s2.index:
+            if str(s1[i]) in (str(s2[j])):
+                res.at[j,"title"]=str(s1[i])
+print(res)
 
 
 
