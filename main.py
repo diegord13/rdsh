@@ -3,18 +3,20 @@ import pandas as pd
 from oauth2client.service_account import ServiceAccountCredentials
 import numpy as np
 from itertools import chain
+from gspread_dataframe import get_as_dataframe, set_with_dataframe
 import re
 
-def takeExcel(page,skiprow):
+def creds():
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     # add credentials to the account
     creds = ServiceAccountCredentials.from_json_keyfile_name('indigo-bazaar-352022-d876f1cad079.json', scope)
     # authorize the clientsheet
     client = gspread.authorize(creds)
     sheet = client.open('Copia de Copy of 2022 Apr COGS')
+    return sheet
 
-    sheet_instance = sheet.get_worksheet(page)
-
+def takeExcel(page,skiprow):
+    sheet_instance = creds().get_worksheet(page)
     records_data = sheet_instance.get_all_values()[skiprow:]
     df = pd.DataFrame(records_data)
     return df
@@ -82,9 +84,18 @@ for i in s1.index:
 print(res)
 
 
-
 # res['Title match'] = res['Memo/Description'].str.extract("(?i)\b")
 print(res.shape)
+
+worksheet_title = 'upload'
+try:
+    worksheet = creds().worksheet(worksheet_title)
+except gspread.WorksheetNotFound:
+    worksheet = creds().add_worksheet(title=worksheet_title, rows=1000, cols=1000)
+
+# Write a test DataFrame to the worksheet
+
+set_with_dataframe(worksheet, res)
 res.to_csv('sheet_name', header=True, index=False)
 
 

@@ -107,7 +107,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654210546402</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="title's names">
+      <created>1654267132064</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1654267132064</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -115,6 +122,7 @@
     <MESSAGE value="get info" />
     <MESSAGE value="functions" />
     <MESSAGE value="title" />
-    <option name="LAST_COMMIT_MESSAGE" value="title" />
+    <MESSAGE value="title's names" />
+    <option name="LAST_COMMIT_MESSAGE" value="title's names" />
   </component>
 </project>
