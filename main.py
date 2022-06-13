@@ -6,6 +6,19 @@ from itertools import chain
 from gspread_dataframe import get_as_dataframe, set_with_dataframe
 import re
 
+# import trino
+# conn = trino.dbapi.connect(
+#     host='trino.data.tapas.io',
+#     port=443,
+#     user='bdg',
+#     catalog='amypvecbr8q1t2g1',
+# )
+# cur = conn.cursor()
+# cur.execute('SHOW SCHEMAS')
+# rows = cur.fetchall()
+# print(rows)
+
+
 def creds():
     scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
     # add credentials to the account
@@ -62,7 +75,7 @@ res['Amount 1'] = res['Memo/Description'].str.extract("([\d,.]+)[^\d,.]*$")
 #res['Title match'] = res['Memo/Description'].str.extract("(?i)")
 df_names_titles = pd.DataFrame(takeExcel(1,0))
 
-res["title"] = " "
+res["Title"] = ""
 
 s1 = df_names_titles[0]
 s2 = res['Memo/Description']
@@ -78,12 +91,20 @@ for i in s1.index:
     #print(str(s1[i]))
     for j in s2.index:
         if str(s1[i]) in (str(s2[j])):
-            res.at[j, "title"] = str(s1[i])
+            res.at[j, "Title"] = str(s1[i])
             print(str(s1[i]))
             print(i)
 print(res)
 
+res['Final Amt'] = ""
+s3 = res['Amount 1']
+s4 = res['Title']
+for i in s3.index:
+    if len(s4[i]) > 1:
+        res.at[i,'Final Amt'] = s3[i]
 
+
+#
 # res['Title match'] = res['Memo/Description'].str.extract("(?i)\b")
 print(res.shape)
 
